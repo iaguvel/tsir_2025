@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+  <title>#{msg['resumenTitulo']}</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+</h:head>
+
+<h:body class="container py-5">
+
+  <h2 class="text-center mb-4">#{msg['resumenTitulo']}</h2>
+
+  <h:form>
+    <h:panelGroup rendered="#{not empty deporteBean.resumen}">
+      <table class="table table-bordered text-center">
+        <thead class="table-info">
+          <tr>
+            <th>#{msg['tablaActividad']}</th>
+            <th>#{msg['tablaDistancia']}</th>
+            <th>#{msg['tablaDuracion']}</th>
+            <th>#{msg['tablaCalorias']}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ui:repeat value="#{deporteBean.resumen}" var="act">
+            <tr>
+              <td>#{act['nombre']}</td>
+              <td>#{act['distancia']}</td>
+              <td>#{act['duracion']}</td>
+              <td>#{act['calorias']}</td>
+            </tr>
+          </ui:repeat>
+        </tbody>
+      </table>
+
+      <div class="text-center mt-4">
+        <p><strong>#{msg['totales']}:</strong></p>
+        <p>#{msg['tablaDistancia']}: #{deporteBean.totalDistancia} km</p>
+        <p>#{msg['tablaDuracion']}: #{deporteBean.totalDuracion} min</p>
+        <p>#{msg['tablaCalorias']}: #{deporteBean.totalCalorias}</p>
+      </div>
+
+      <div class="text-center mt-4">
+        <h:commandButton value="#{msg['botonVolver']}" action="#{deporteBean.volver}"
+                         styleClass="btn btn-secondary me-3" />
+        <h:commandButton value="#{msg['botonFinalizar']}" action="#{logoutBean.logout}"
+                         styleClass="btn btn-success" />
+      </div>
+    </h:panelGroup>
+
+    <h:panelGroup rendered="#{empty deporteBean.resumen}">
+      <p class="text-center text-muted mt-5">#{msg['resumenVacio']}</p>
+    </h:panelGroup>
+  </h:form>
+</h:body>
+</html>

@@ -1,2 +1,5 @@
-com\mycompany\sportstrack\resources\JavaEE8Resource.class
 com\mycompany\sportstrack\JAXRSConfiguration.class
+com\mycompany\sportstrack\LocaleBean.class
+com\mycompany\sportstrack\DeporteBean.class
+com\mycompany\sportstrack\resources\JavaEE8Resource.class
+com\mycompany\sportstrack\LogoutBean.class
