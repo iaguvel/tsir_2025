@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glassfish-web-app xmlns="http://xmlns.jcp.org/xml/ns/glassfish/web-app/4.0">
+    <security-role-mapping>
+        <role-name>usuario</role-name>
+        <group-name>usuario</group-name>
+    </security-role-mapping>
+</glassfish-web-app>
