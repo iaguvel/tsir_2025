@@ -1,86 +1,62 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-
-<h:head>
-  <title>#{msg['detalleTitulo']}</title>
-  <meta charset="UTF-8" />
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
-  <style>
-    body {
-      font-family: 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #f1f8e9, #c8e6c9);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    h2 { font-weight: 700; color: #1b5e20; }
-    table { border-radius: 10px; overflow: hidden; }
-    .btn-custom { border-radius: 8px; }
-    footer { text-align: center; margin-top: auto; padding: 20px 0; color: #444; }
-  </style>
-</h:head>
-
-<h:body>
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
 <f:view locale="#{localeBean.locale}">
-
-  <div class="container py-5">
-
-    <!-- Título -->
-    <h2 class="text-center mb-4">
-      <h:outputFormat value="#{msg['detalleTitulo']}">
-        <f:param value="#{msg[deporteBean.deporteSeleccionado]}" />
-      </h:outputFormat>
-    </h2>
-
-    <!-- Tabla -->
-    <h:form>
-      <table class="table table-striped table-hover text-center">
-        <thead class="table-success">
-          <tr>
-            <th>#{msg['tablaActividad']}</th>
-            <th>#{msg['tablaDistancia']}</th>
-            <th>#{msg['tablaDuracion']}</th>
-            <th>#{msg['tablaCalorias']}</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <ui:repeat value="#{deporteBean.actividades}" var="act">
-            <tr>
-              <td>#{act['nombre']}</td>
-              <td>#{act['distancia']}</td>
-              <td>#{act['duracion']}</td>
-              <td>#{act['calorias']}</td>
-              <td>
-                <h:commandButton value="#{msg['botonAgregar']}"
-                                 action="#{deporteBean.agregarActividad(act)}"
-                                 styleClass="btn btn-success btn-sm btn-custom" />
-              </td>
-            </tr>
-          </ui:repeat>
-        </tbody>
-      </table>
-
-      <!-- Botones -->
-      <div class="text-center mt-4">
-        <h:commandButton value="#{msg['botonVolver']}" action="#{deporteBean.volver}"
-                         styleClass="btn btn-secondary me-3 btn-custom" />
-        <h:commandButton value="#{msg['botonResumen']}" action="#{deporteBean.irAResumen}"
-                         styleClass="btn btn-primary btn-custom" />
-      </div>
-    </h:form>
-
-  </div>
-
-  <footer>
-    <small>© 2025 SportsTrack</small>
-  </footer>
-
-</f:view>
+<h:head>
+    <title>#{msg['detalleTitulo']}</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <style>
+        body { background: linear-gradient(135deg, #f1f8e9, #c8e6c9); }
+        .card { border-radius: 15px; }
+    </style>
+</h:head>
+<h:body>
+    <div class="container py-5">
+        <h:form>
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4" style="color:#1b5e20;">
+                        #{msg['detalleActividades']}: #{msg[deporteBean.deporteSeleccionado]}
+                    </h2>
+                    
+                    <h:dataTable value="#{deporteBean.actividades}" var="act" 
+                                 styleClass="table table-hover align-middle">
+                        <h:column>
+                            <f:facet name="header">#{msg['detalleNombre']}</f:facet>
+                            #{act.nombre}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">#{msg['detalleDist']}</f:facet>
+                            #{act.distancia} km
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">#{msg['detalleDur']}</f:facet>
+                            #{act.duracion} min
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">#{msg['detalleCal']}</f:facet>
+                            #{act.calorias} kcal
+                        </h:column>
+                        <h:column>
+                            <h:commandButton value="#{msg['detalleAdd']}" 
+                                             action="#{deporteBean.agregarActividad(act)}"
+                                             styleClass="btn btn-sm btn-success" />
+                        </h:column>
+                    </h:dataTable>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <h:commandButton value="#{msg['volver']}" action="#{deporteBean.volver}" 
+                                         styleClass="btn btn-secondary" />
+                        <h:commandButton value="#{msg['irResumen']}" action="#{deporteBean.irAResumen}" 
+                                         styleClass="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </div>
 </h:body>
+</f:view>
 </html>

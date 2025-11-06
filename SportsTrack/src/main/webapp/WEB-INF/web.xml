@@ -19,31 +19,37 @@
 
     <!-- ✅ 2. Página de inicio -->
     <welcome-file-list>
-        <welcome-file>bienvenida.xhtml</welcome-file>
+        <welcome-file>deportes.xhtml</welcome-file>
     </welcome-file-list>
 
     <!-- ✅ 3. Seguridad declarativa -->
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>Zona protegida</web-resource-name>
+            <web-resource-name>Paginas Protegidas</web-resource-name>
+            
             <url-pattern>/deportes.xhtml</url-pattern>
+            <url-pattern>/detalle.xhtml</url-pattern>
+            <url-pattern>/resumen.xhtml</url-pattern>
+            
         </web-resource-collection>
+        
         <auth-constraint>
-            <role-name>usuario</role-name>
+            <role-name>sport_user</role-name> 
         </auth-constraint>
-    </security-constraint>
+        
+        </security-constraint>
 
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>file</realm-name>
         <form-login-config>
-            <form-login-page>/login.jsp</form-login-page>
-            <form-error-page>/error.jsp</form-error-page>
+            <form-login-page>/bienvenida.xhtml</form-login-page>
+            <form-error-page>/error.xhtml</form-error-page>
         </form-login-config>
     </login-config>
-
+    
     <security-role>
-        <role-name>usuario</role-name>
+        <role-name>sport_user</role-name> 
     </security-role>
 
 </web-app>

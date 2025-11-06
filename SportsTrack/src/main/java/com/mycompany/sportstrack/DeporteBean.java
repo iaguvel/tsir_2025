@@ -43,8 +43,11 @@ public class DeporteBean implements Serializable {
     }
 
     public String irAResumen() {
-        return "resumen.xhtml?faces-redirect=true";
+            
+           return "resumen.xhtml?faces-redirect=true";
+        
     }
+
 
     public String volver() {
         return "deportes.xhtml?faces-redirect=true";
@@ -59,6 +62,8 @@ public class DeporteBean implements Serializable {
         } else if ("deporte.ciclismo".equals(deporteSeleccionado)) {
             actividades.add(crearActividad("Ruta montaña", 30, 90, 800));
             actividades.add(crearActividad("Rodillo indoor", 20, 60, 500));
+            actividades.add(crearActividad("Series 5x3min", 15, 45, 450));
+            actividades.add(crearActividad("Fondo en llano", 60, 120, 1100));
         } else if ("deporte.natacion".equals(deporteSeleccionado)) {
             actividades.add(crearActividad("Técnica 1000 m", 1, 30, 250));
             actividades.add(crearActividad("Aguas abiertas", 1.5, 40, 320));
