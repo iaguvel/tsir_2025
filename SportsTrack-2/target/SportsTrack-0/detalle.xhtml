@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:view locale="#{localeBean.locale}">
+<h:head>
+    <title>#{msg['detalleTitulo']}</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <style>
+        body {
+            background: linear-gradient(135deg, #f1f8e9, #c8e6c9);
+        }
+        .card {
+            border-radius: 15px;
+        }
+
+        /* ✅ Estilo del toast (mensaje flotante tipo carrito) */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #43a047;
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+            padding: 12px;
+            position: fixed;
+            z-index: 999;
+            left: 50%;
+            bottom: 40px;
+            transform: translateX(-50%);
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.5s ease, bottom 0.5s ease;
+        }
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 60px;
+        }
+        
+        .btn-danger {
+    background-color: #e53935;
+    border: none;
+}
+.btn-danger:hover {
+    background-color: #c62828;
+}
+    </style>
+</h:head>
+
+<h:body>
+    <div class="container py-5">
+        <h:form id="form">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+
+                    <h2 class="text-center mb-4" style="color:#1b5e20;">
+                        #{msg['detalleActividades']}: #{msg[deporteBean.deporteSeleccionado]}
+                    </h2>
+
+                    <!-- ✅ Tabla de actividades -->
+                    <h:dataTable value="#{deporteBean.actividades}" var="act"
+                                 styleClass="table table-hover align-middle">
+
+                        <h:column>
+                            <f:facet name="header">#{msg['detalleNombre']}</f:facet>
+                            #{act.nombre}
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">#{msg['detalleDist']}</f:facet>
+                            #{act.distancia} km
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">#{msg['detalleDur']}</f:facet>
+                            #{act.duracion} min
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">#{msg['detalleCal']}</f:facet>
+                            #{act.calorias} kcal
+                        </h:column>
+
+                        <h:column>
+                            <h:commandButton value="#{msg['detalleAdd']}"
+                                             action="#{deporteBean.agregarActividad(act)}"
+                                             styleClass="btn btn-sm btn-success">
+                                <f:ajax execute="@this" render="@none" onevent="mostrarToast" />
+                            </h:commandButton>
+                        </h:column>
+                    </h:dataTable>
+
+                    <!-- ✅ Botones inferiores -->
+                    <div class="d-flex justify-content-between mt-4">
+                       <h:commandButton value="#{msg['logout']}" 
+                         action="#{logoutBean.logout}" 
+                         styleClass="btn btn-danger btn-sm" />
+                        
+                        <h:commandButton value="#{msg['volver']}"
+                                         action="#{deporteBean.volver}"
+                                         styleClass="btn btn-secondary" />
+                        <h:commandButton value="#{msg['irResumen']}"
+                                         action="#{deporteBean.irAResumen}"
+                                         styleClass="btn btn-primary" />
+                    </div>
+
+                </div>
+            </div>
+        </h:form>
+
+        <!-- ✅ Toast visual (tipo “añadido al carrito”) -->
+        <div id="toast">✅ Añadido a tu plan</div>
+    </div>
+
+    <h:outputScript target="body">
+        function mostrarToast(event) {
+            if (event.status === 'success') {
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            }
+        }
+    </h:outputScript>
+
+</h:body>
+</f:view>
+</html>

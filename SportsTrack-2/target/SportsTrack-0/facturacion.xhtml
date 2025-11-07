@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<f:view locale="#{localeBean.locale}">
+<h:head>
+    <title>#{msg['facturacionTitulo']}</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <style>
+        body { background: linear-gradient(135deg, #f1f8e9, #c8e6c9); font-family: 'Segoe UI', Roboto, sans-serif; }
+        .card { border-radius: 15px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .form-label { font-weight: 600; }
+        .alert { font-weight: 600; }
+    </style>
+</h:head>
+
+<h:body>
+<div class="container py-5">
+
+    <!-- Aviso si NO hay una actividad de cada deporte -->
+    <h:panelGroup rendered="#{not deporteBean.tieneTodasLasCategorias()}">
+        <div class="alert alert-warning text-center shadow-sm">
+            #{msg['faltanCategorias']}
+        </div>
+        <div class="text-center mt-3">
+            <h:form>
+                <h:commandButton value="#{msg['volver']}"
+                                 action="#{deporteBean.irAResumen}"
+                                 styleClass="btn btn-secondary" />
+            </h:form>
+        </div>
+    </h:panelGroup>
+
+    <!-- Formulario solo si SÍ cumple el requisito -->
+    <h:panelGroup rendered="#{deporteBean.tieneTodasLasCategorias()}">
+        <div class="card p-4 shadow-sm">
+            <h2 class="text-center mb-4" style="color:#1b5e20;">
+                #{msg['facturacionTitulo']}
+            </h2>
+
+            <h:form id="facturaForm">
+                <div class="mb-3">
+                    <label class="form-label">#{msg['nombre']}</label>
+                    <h:inputText value="#{facturaBean.nombre}" styleClass="form-control" required="true" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">#{msg['apellidos']}</label>
+                    <h:inputText value="#{facturaBean.apellidos}" styleClass="form-control" required="true" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">#{msg['numTarjeta']}</label>
+                    <h:inputText value="#{facturaBean.tarjeta}" styleClass="form-control"
+                                 maxlength="16" required="true" pt:inputmode="numeric" pt:pattern="[0-9]*">
+                        <!-- Regex escapado correctamente -->
+                        <f:validateRegex pattern="\\d{16}" />
+                    </h:inputText>
+                    <small class="text-muted">16 dígitos sin espacios</small>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">#{msg['fechaCad']}</label>
+                    <h:inputText value="#{facturaBean.fechaCaducidad}" styleClass="form-control"
+                                 required="true" pt:placeholder="MM/AA">
+                        <!-- Usa / y dos dígitos, sin barras inversas dobles aquí -->
+                        <f:validateRegex pattern="(0[1-9]|1[0-2])/[0-9]{2}" />
+                    </h:inputText>
+                    <small class="text-muted">Formato: MM/AA (ej: 05/27)</small>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">#{msg['importeTotal']}</label>
+                    <h:inputText value="#{facturaBean.importe}" styleClass="form-control" required="true" />
+                    <small class="text-muted">#{msg['monedaActual']}: #{facturaBean.moneda}</small>
+                </div>
+
+                <div class="text-center mt-4">
+                    <h:commandButton value="#{msg['realizarCompra']}"
+                                     action="#{facturaBean.confirmarCompra}"
+                                     styleClass="btn btn-success px-4" />
+                </div>
+
+                <h:messages globalOnly="true" styleClass="alert alert-danger mt-3 text-center" />
+            </h:form>
+        </div>
+    </h:panelGroup>
+</div>
+</h:body>
+</f:view>
+</html>
