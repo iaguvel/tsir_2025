@@ -72,6 +72,13 @@
                     </h:inputText>
                     <small class="text-muted">Formato: MM/AA (ej: 05/27)</small>
                 </div>
+                <div class="mb-3">
+                    <label class="form-label">#{msg['resumenTotalCal']}</label>
+
+                    <h:outputText value="#{deporteBean.totalCalorias}" styleClass="form-control-plaintext fs-4 fw-bold">
+                        <f:convertNumber type="number" />
+                    </h:outputText>
+                </div>
 
                 <div class="mb-3">
                     <label class="form-label">#{msg['importeTotal']}</label>
