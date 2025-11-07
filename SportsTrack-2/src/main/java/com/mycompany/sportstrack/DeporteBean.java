@@ -6,6 +6,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import javax.faces.context.FacesContext;
 
 @ManagedBean(name = "deporteBean")
 @SessionScoped
@@ -61,12 +64,14 @@ public class DeporteBean implements Serializable {
 
     public List<Map<String, String>> getActividades() {
         List<Map<String, String>> actividades = new ArrayList<>();
+        Locale idiomaActual = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+        ResourceBundle msg = ResourceBundle.getBundle("messages", idiomaActual);
 
         if ("deporte.running".equals(deporteSeleccionado)) {
             actividades.add(crearActividad("5 km tempo run", 5, 25, 300));
             actividades.add(crearActividad("Intervalos 10x400m", 4, 20, 250));
         } else if ("deporte.ciclismo".equals(deporteSeleccionado)) {
-            actividades.add(crearActividad("Ruta montaña", 30, 90, 800));
+            actividades.add(crearActividad(msg.getString("MR"), 30, 90, 800));
             actividades.add(crearActividad("Rodillo indoor", 20, 60, 500));
             actividades.add(crearActividad("Series 5x3min", 15, 45, 450));
             actividades.add(crearActividad("Fondo en llano", 60, 120, 1100));
